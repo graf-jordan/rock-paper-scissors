@@ -10,20 +10,22 @@
     <script>
         function playRound(playerSelection, computerSelection) {
             playerSelection = playerSelection.toLowerCase();
+            let result = "test";
              
             if (playerSelection != "rock" && playerSelection != "scissors" && playerSelection != "paper") {
-                alert("Silly! Wrong input!");
+                console.log("Silly! Wrong input!");
             } else if (playerSelection == computerSelection) {
-                alert("Draw!");
+                console.log("Draw!");
+                result = "No one";
             } else {
-                let result = checkWinner(playerSelection, computerSelection);
+                result = checkWinner(playerSelection, computerSelection);
                 if (result == 0) {
                     result = "Player";
                 } else {
                     result = "Computer";
                 }
-                alert(result + " is the winner!");
             }
+            return result;
         }
         function getComputerChoice() {
             let choice = Math.floor(Math.random() * 3);
@@ -48,9 +50,31 @@
                 return 0;
             }
         }
-        const playerSelection = prompt("What will you play?");
-        const computerSelection = getComputerChoice();
-        playRound(playerSelection, computerSelection);  
+        function game() {
+            let playerCounter = 0;
+            let computerCounter = 0;
+            for (let i = 0; i < 5; i++) {
+                let playerSelection = prompt("What will you play?");
+                let computerSelection = getComputerChoice();
+                let winner = playRound(playerSelection, computerSelection);  
+                console.log(winner + " is the winner!");
+                if (winner == "Player") {
+                    playerCounter++;
+                } else if (winner == "Computer") {
+                    computerCounter++;
+                } else if (winner == "No one") {
+                    i--;
+                }
+                console.log("Player wins: " + playerCounter);
+                console.log("Computer wins: " + computerCounter);
+            } if (playerCounter > computerCounter) {
+                console.log("PLAYER IS OUR WINNER!");
+            } else {
+                console.log("COMPUTER IS OUR WINNER!");
+            }
+        }
+        console.log("Best of 5 in rock paper scissors (draws don't count, obviously.");
+        game();
     </script>
 </body>
 </html>
